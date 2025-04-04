@@ -1,0 +1,57 @@
+body {
+  background-color: #3b6b3f;
+}
+
+#app {
+  width: 100%;
+  height: 100vh;
+}
+
+.wrapper {
+  width: 100%;
+
+}
+
+.wrapper .roulette {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper .arrow {
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-top: 80px solid #C60200;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+  border-radius: 10px;
+  position: absolute;
+  z-index: 1;
+  top: 34px;
+}
+
+.spin {
+  cursor: crosshair;
+}
+
+.wrapper .roulette img {
+  filter: brightness(1.1) contrast(1.2);
+}
+
+.wrapper .spin-button {
+  margin-top: 100px;
+}
+
+.roulette-wheel {
+  transition: transform 2s ease-out;
+}
+
+@keyframes zeroPosition {
+  0% {
+    transform: rotate(10000deg);
+  }
+  
+}
+
