@@ -138,3 +138,4 @@ C:\Users\Ivan\Documents\Ivan workspace\01 Projects\roulette\backend\bin\Debug\ne
 C:\Users\Ivan\Documents\Ivan workspace\01 Projects\roulette\backend\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Ivan\Documents\Ivan workspace\01 Projects\roulette\backend\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Ivan\Documents\Ivan workspace\01 Projects\roulette\backend\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\Ivan\Documents\Ivan workspace\01 Projects\roulette\backend\obj\Debug\net8.0\backend.sourcelink.json
