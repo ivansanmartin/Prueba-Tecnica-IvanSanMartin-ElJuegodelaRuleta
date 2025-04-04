@@ -1,59 +1,56 @@
 <template>
-    <div class="option-color">
-        <div class="input-group mt-4">
-            <span class="input-group-text"><span><small>🔴</small></span>|<span><small>⚫</small></span></span>
-            <select name="color" id="color" class="form-select">
-                <option selected>Seleccione algún color</option>
-                <option value="rojo">Rojo</option>
-                <option value="negro">Negro</option>
-            </select>
-        </div>
+  <div class="option-color">
+    <div class="input-group mt-4">
+      <span class="input-group-text"><span><small>🔴</small></span>|<span><small>⚫</small></span></span>
+      <select @change="setColorBet($event)" name="color" id="color" class="form-select">
+        <option selected>Seleccione algún color</option>
+        <option value="red">Rojo</option>
+        <option value="black">Negro</option>
+      </select>
     </div>
+  </div>
 
-    {{ rouletteStore }}
-
-    <div class="spin-button">
-      <button class="btn btn-secondary mt-5" @click="spinRoulette">Apostar</button>
+  <div v-if="rouletteStore.roulette != null && showResult" class="alert alert-secondary mt-4">
+    <div class="title">
+      <h6>Resultado de la ruleta: </h6>
     </div>
+    <div class="results-roulette d-flex flex-column align-items-start mt-3">
+      <p>Color: <span><small>{{ rouletteStore.roulette.color == "red" ? "🔴" : "⚫" }}</small></span></p>
+      <p>Color apostado: <span><small>{{ colorBet == "red" ? "🔴" : "⚫" }}</small></span></p>
+    </div>
+  </div>
 
+  <SpinRouletteButton></SpinRouletteButton>
 
 </template>
 
 <script setup>
-import { useRoulette } from '@/composables/useRoulette';
+import SpinRouletteButton from '../SpinRouletteButton.vue';
 import { useSpinRouletteStore } from '@/store/spinRouletteStore';
+import { useBalanceStore } from "@/store/balanceStore";
+import { ref, watch } from 'vue';
+
+
+
+const showResult = ref(false);
+const colorBet = ref("");
+
 
 const rouletteStore = useSpinRouletteStore();
+const balanceStore = useBalanceStore();
 
-const spinRoulette = async () => {
-    const spinData = await useRoulette(); 
-
-    const roulette = document.querySelector('.roulette-wheel');
-    roulette.style.transition = "none";
-    roulette.style.transform = "rotate(0deg)"
-
-    await new Promise(resolve => setTimeout(resolve, 50));
-
-    const numbersOrder = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26];
-    const baseRotation = -1080;
-    const degreesPerNumber = -360 / numbersOrder.length;
-
-    const numberIndex = numbersOrder.indexOf(spinData.number);
-    if (numberIndex === -1) {
-      console.error("The number is not correct.");
-      return;
-    }
-
-    const extraTurns = -360 * 5;
-    const finalRotation = baseRotation + (numberIndex * degreesPerNumber) + extraTurns;
-
-    console.log(spinData)
-
-    setTimeout(() => {
-      roulette.style.transition = "transform 3s ease-out";
-      roulette.style.transform = `rotate(${finalRotation}deg)`;
-
-    }, 500)
+const setColorBet = (event) => {
+  colorBet.value = event.target.value
 }
+
+
+watch(() => rouletteStore.roulette, (newRoulette) => {
+  if (newRoulette) {
+    showResult.value = false;
+    setTimeout(() => {
+      showResult.value = true;
+    }, 3600);
+  }
+});
 
 </script>

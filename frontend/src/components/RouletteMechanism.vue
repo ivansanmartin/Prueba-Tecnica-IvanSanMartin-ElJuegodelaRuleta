@@ -26,7 +26,7 @@
 
     <div class="game-options text-center mt-5 d-flex flex-column">
       <h3>¿A qué desea apostar?</h3>
-      <p v-if="balance == 0" class="text-warning">Por favor ingresa un saldo.</p>
+      <p v-if="balance == 0" class="text-warning">Por favor ingrese un saldo.</p>
       <div class="options mt-3 d-flex flex-column align-items-center">
 
         <div>
@@ -64,6 +64,7 @@ import { storeToRefs } from "pinia";
 const selectedBetType = ref(null);
 
 const balanceStore = useBalanceStore();
+
 const { balance } = storeToRefs(balanceStore)
 
 const getSelectedOption = (event) => {
