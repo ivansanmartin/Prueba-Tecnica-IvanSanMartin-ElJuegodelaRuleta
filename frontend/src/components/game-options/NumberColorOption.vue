@@ -10,7 +10,7 @@
         </div>
 
         <div class="mt-3">
-            <input type="number" @change="setNumber($event)" name="numerBet" id="numerBet" class="form-control"
+            <input type="number" @change="setNumber($event)" name="numBet" id="numerBet" class="form-control"
                 placeholder="Ingrese un número">
         </div>
 
@@ -18,13 +18,13 @@
             {{ errorMessage }}
         </div>
 
-        <div v-if="rouletteStore.roulette != null && showResult" class="alert alert-secondary mt-4">
+        <div v-if="showResult" class="alert alert-secondary mt-4">
             <div class="title">
                 <h6>Resultado de la ruleta: </h6>
             </div>
             <div class="results-roulette d-flex flex-column align-items-start mt-3">
-                <p>Color: <span><small>{{ rouletteStore.roulette.color == "red" ? "🔴" : "⚫" }}</small></span></p>
-                <p>Color apostado: <span><small>{{ colorBet == "red" ? "🔴" : "⚫" }}</small></span></p>
+                <p>Ruleta: <small>{{ rouletteStore.roulette.number }}</small> - <span><small>{{ rouletteStore.roulette.color == "red" ? "🔴" : colorBet == "green" ? "🟢" : "⚫" }}</small></span></p>
+                <p>Apuesta: <small>{{ number }}</small> - <span><small>{{ color == "red" ? "🔴" : color == "green" ? "🟢" : "⚫" }}</small></span></p>
             </div>
         </div>
 
@@ -39,6 +39,7 @@
 import { Colors } from "@/enums/colors";
 import SpinRouletteButton from "../SpinRouletteButton.vue";
 import { useSpinRouletteStore } from "@/store/spinRouletteStore";
+import { useStoppedRoulette } from '@/store/stoppedRouletteStore';
 import { useBalanceStore } from "@/store/balanceStore";
 import { ref, watch } from "vue";
 
@@ -50,6 +51,8 @@ const showResult = ref(false);
 
 const rouletteStore = useSpinRouletteStore();
 const balanceStore = useBalanceStore();
+const stoppedRoulette = useStoppedRoulette();
+
 
 const setColor = (event) => {
     color.value = event.target.value;
@@ -84,13 +87,21 @@ const validateForm = () => {
     }
 };
 
-watch(() => rouletteStore.roulette, (newRoulette) => {
-  if (newRoulette) {
-    showResult.value = false;
-    setTimeout(() => {
-      showResult.value = true;
-    }, 3600);
-  }
-});
 
+watch(number, (value) => {
+    if (!number.value) {
+        number.value = 0
+    }
+    if (value < 0) {
+        number.value = Math.abs(value);
+    }
+})
+
+watch(() => stoppedRoulette.isStopped, (stopped) => {
+  showResult.value = false;
+  if (stopped) {
+    showResult.value = true;
+
+  }
+})
 </script>

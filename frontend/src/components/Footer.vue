@@ -7,7 +7,6 @@
 </template>
 
 <style scoped>
-
 footer {
     display: flex;
     justify-content: center;
@@ -19,5 +18,4 @@ footer {
     height: 120px;
     box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.25);
 }
-
 </style>
