@@ -56,7 +56,7 @@
       </div>
     </div>
   </div>
-  
+
   <SaveResult v-if="loggedStore.isLogged && gameResultStore.result && gameResultStore.result.is_winner"></SaveResult>
 
 
@@ -75,6 +75,7 @@ import { useLoadingStore } from '@/store/loadingStore';
 import { useBetStore } from '@/store/betStore';
 import { useGameResultStore } from '@/store/gameResultStore';
 import { useLoggedStore } from '@/store/loggedStore';
+import { useLastProfitStore } from '@/store/lastProfitStore';
 import { useGame } from '@/composables/useGame';
 import { ref, computed, watch } from 'vue';
 
@@ -90,6 +91,7 @@ const stoppedRoulette = useStoppedRoulette();
 const loadingStore = useLoadingStore();
 const gameResultStore = useGameResultStore();
 const loggedStore = useLoggedStore();
+const lastProfitStore = useLastProfitStore();
 
 const isDisabled = computed(() => {
   return colorBet.value === "" || loadingStore.isLoading
@@ -127,6 +129,7 @@ watch(
 
       if (gameResultStore.result.is_winner) {
           balanceStore.setBalance(balanceStore.balance + gameResultStore.result.amount_won)
+          lastProfitStore.setProfit(gameResultStore.result.amount_won)
       } else {
           balanceStore.setBalance(balanceStore.balance - gameResultStore.result.amount_lost)
       }
