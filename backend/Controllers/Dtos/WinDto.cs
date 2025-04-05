@@ -15,6 +15,9 @@ namespace backend.Controllers.Dtos
 
         [Required]
         public int BetAmount { get; set; }
+
+        [Required]
+        public bool Winning { get; set; }
         
     }
 }
