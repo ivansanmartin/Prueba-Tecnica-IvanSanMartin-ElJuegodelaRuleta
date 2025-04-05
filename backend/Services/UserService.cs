@@ -22,14 +22,30 @@ namespace backend.Services
             return _context.User.FirstOrDefault(user => user.Username == username);
         }
 
-        public async Task<UserDto> CreateUser(UserDto userDto)
+        public async Task<UserDto> CreateOrUpdateUser(UserDto userDto)
         {
-            var user = new User {
+            var existngUser = _context.User.FirstOrDefault(user => user.Username == userDto.Username);
+
+            if (existngUser != null)
+            {
+                existngUser.Amount += userDto.Amount;
+
+                await _context.SaveChangesAsync();
+
+                return new UserDto
+                {
+                    Username = existngUser.Username,
+                    Amount = existngUser.Amount
+                };
+            }
+
+            var newUser = new User 
+            {
                 Username = userDto.Username,
                 Amount = userDto.Amount
             };
 
-            _context.User.Add(user);
+            _context.User.Add(newUser);
             await _context.SaveChangesAsync();
 
             return userDto;

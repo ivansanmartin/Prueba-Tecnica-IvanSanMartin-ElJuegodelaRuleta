@@ -34,7 +34,7 @@ namespace backend.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var result = await _userService.CreateUser(user);
+            var result = await _userService.CreateOrUpdateUser(user);
 
             return Ok(result);
         }
