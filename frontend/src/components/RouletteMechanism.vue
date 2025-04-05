@@ -62,18 +62,20 @@ import ColorOption from "./game-options/ColorOption.vue"
 import NumberColor from "./game-options/NumberColorOption.vue"
 import ParityColorOption from "./game-options/ParityColorOption.vue"
 import { useBalanceStore } from "@/store/balanceStore"
+import { useBetStore } from "@/store/betStore"
 
 import { ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 
 const selectedBetType = ref(null);
-const bet = ref(0);
 const criterionNotMet = ref(false);
 const errorMessage = ref("");
 
 const balanceStore = useBalanceStore();
+const betStore = useBetStore();
 
 const { balance } = storeToRefs(balanceStore)
+const { bet } = storeToRefs(betStore)
 
 
 watch(bet, (val) => {

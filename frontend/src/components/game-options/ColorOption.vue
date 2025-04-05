@@ -42,26 +42,54 @@
     </div>
   </div>
 
+  <div v-if="gameResultStore.result && !gameIsLaoding" class="alert alert-secondary mt-4">
+    <div class="title">
+      <h6 class="badge text-bg-secondary">{{ gameResultStore.result.message }}</h6>
+    </div>
+    <div class="results-roulette d-flex flex-column mt-3">
+      <div class="d-flex flex-column align-items-center">
+        <p>
+          <small class="text-success fw-bold">
+            {{ !gameResultStore.result.is_winner ? "¡Sigue intentandolo!" : "¡Excelente!" }}
+          </small>
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <SaveResult v-if="loggedStore.isLogged && gameResultStore.result && gameResultStore.result.is_winner"></SaveResult>
+
+
+
   <SpinRouletteButton :is-disabled="isDisabled"></SpinRouletteButton>
 </template>
 
 <script setup>
 import SpinRouletteButton from '../SpinRouletteButton.vue';
 import RouletteLoading from '../RouletteLoading.vue';
+import SaveResult from '../SaveResult.vue';
 import { useSpinRouletteStore } from '@/store/spinRouletteStore';
 import { useStoppedRoulette } from '@/store/stoppedRouletteStore';
 import { useBalanceStore } from "@/store/balanceStore";
 import { useLoadingStore } from '@/store/loadingStore';
+import { useBetStore } from '@/store/betStore';
+import { useGameResultStore } from '@/store/gameResultStore';
+import { useLoggedStore } from '@/store/loggedStore';
+import { useGame } from '@/composables/useGame';
 import { ref, computed, watch } from 'vue';
 
 const showResult = ref(false);
 const colorBet = ref("");
 const finalColorBet = ref("");
+const gameIsLaoding = ref(false);
 
 const rouletteStore = useSpinRouletteStore();
 const balanceStore = useBalanceStore();
+const betStore = useBetStore();
 const stoppedRoulette = useStoppedRoulette();
 const loadingStore = useLoadingStore();
+const gameResultStore = useGameResultStore();
+const loggedStore = useLoggedStore();
 
 const isDisabled = computed(() => {
   return colorBet.value === "" || loadingStore.isLoading
@@ -77,12 +105,35 @@ const wonColorBet = computed(() => {
 
 watch(
   [() => stoppedRoulette.isStopped, () => loadingStore.isLoading],
-  ([stopped, loading]) => {
+  async ([stopped, loading]) => {
     showResult.value = false;
+    gameIsLaoding.value = true;
+
     if (stopped && !loading) {
       showResult.value = true;
       finalColorBet.value = colorBet.value;
+
+      const body = {
+        "betType": 0,
+        "betAmount": betStore.bet,
+        "winning": wonColorBet.value
+      }
+
+      await useGame(body);
+
+      gameIsLaoding.value = false;
+
+      console.log(gameResultStore.result)
+
+      if (gameResultStore.result.is_winner) {
+          balanceStore.setBalance(balanceStore.balance + gameResultStore.result.amount_won)
+      } else {
+          balanceStore.setBalance(balanceStore.balance - gameResultStore.result.amount_lost)
+      }
+
     }
   }
 );
+
+
 </script>
