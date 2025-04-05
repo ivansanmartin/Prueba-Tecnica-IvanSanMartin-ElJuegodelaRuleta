@@ -13,7 +13,7 @@
 
 
 <script setup>
-import { useBalanceStore } from '@/store/balanceStore';
+import { useBalanceStore } from '@/store/game/balanceStore';
 
 const balanceStore = useBalanceStore();
 

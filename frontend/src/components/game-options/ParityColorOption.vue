@@ -62,18 +62,19 @@
 
 <script setup>
 import { ref, computed, watch } from "vue"
-import SpinRouletteButton from "../SpinRouletteButton.vue";
-import RouletteLoading from "../RouletteLoading.vue";
-import { useSpinRouletteStore } from "@/store/spinRouletteStore";
-import { useStoppedRoulette } from "@/store/stoppedRouletteStore";
-import { useBalanceStore } from "@/store/balanceStore";
-import { useLoadingStore } from "@/store/loadingStore";
+import SpinRouletteButton from "../layout/SpinRouletteButton.vue";
+import RouletteLoading from "../layout/RouletteLoading.vue";
+import { useSpinRouletteStore } from "@/store/roulette/spinRouletteStore";
+import { useStoppedRoulette } from "@/store/roulette/stoppedRouletteStore";
+import { useBalanceStore } from "@/store/game/balanceStore";
+import { useLoadingStore } from "@/store/game/loadingStore";
 
 const parity = ref("");
 const color = ref("");
 const finalParity = ref("")
 const finalColor = ref ("")
 const showResult = ref(false);
+
 const parityObject = ref({
     pair: "Par",
     odd: "Impar"

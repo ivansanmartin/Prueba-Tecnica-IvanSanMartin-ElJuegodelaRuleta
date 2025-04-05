@@ -1,4 +1,4 @@
-import { useGameResultStore } from "@/store/gameResultStore";
+import { useGameResultStore } from "@/store/user/gameResultStore";
 import { getGameResult } from "@/helpers/getGameResult";
 
 export const useGame = async (body) => {

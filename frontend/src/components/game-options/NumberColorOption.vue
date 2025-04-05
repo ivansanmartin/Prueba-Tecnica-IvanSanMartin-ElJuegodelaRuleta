@@ -58,12 +58,12 @@
 <script setup>
 
 import { Colors } from "@/enums/colors";
-import SpinRouletteButton from "../SpinRouletteButton.vue";
-import RouletteLoading from "../RouletteLoading.vue";
-import { useSpinRouletteStore } from "@/store/spinRouletteStore";
-import { useStoppedRoulette } from '@/store/stoppedRouletteStore';
-import { useBalanceStore } from "@/store/balanceStore";
-import { useLoadingStore } from "@/store/loadingStore";
+import SpinRouletteButton from "../layout/SpinRouletteButton.vue";
+import RouletteLoading from "../layout/RouletteLoading.vue";
+import { useSpinRouletteStore } from "@/store/roulette/spinRouletteStore";
+import { useStoppedRoulette } from '@/store/roulette/stoppedRouletteStore';
+import { useBalanceStore } from "@/store/game/balanceStore";
+import { useLoadingStore } from "@/store/game/loadingStore";
 import { ref, watch, computed } from "vue";
 
 const color = ref("");

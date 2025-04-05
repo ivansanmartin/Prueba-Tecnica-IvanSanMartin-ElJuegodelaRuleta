@@ -61,8 +61,8 @@
 import ColorOption from "./game-options/ColorOption.vue"
 import NumberColor from "./game-options/NumberColorOption.vue"
 import ParityColorOption from "./game-options/ParityColorOption.vue"
-import { useBalanceStore } from "@/store/balanceStore"
-import { useBetStore } from "@/store/betStore"
+import { useBalanceStore } from "@/store/game/balanceStore"
+import { useBetStore } from "@/store/game/betStore"
 
 import { ref, watch } from "vue";
 import { storeToRefs } from "pinia";

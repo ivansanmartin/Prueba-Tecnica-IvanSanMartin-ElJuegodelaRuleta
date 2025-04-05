@@ -29,13 +29,13 @@
 
 <script setup>
 import RouletteMechanism from "./components/RouletteMechanism.vue";
-import Header from "./components/Header.vue";
-import Footer from "./components/Footer.vue";
-import Profile from "./components/Profile.vue";
-import LoadProfile from "./components/LoadProfile.vue";
-import NoProfile from "./components/NoProfile.vue";
+import Header from "./components/layout/Header.vue";
+import Footer from "./components/layout/Footer.vue";
+import Profile from "./components/profile/Profile.vue";
+import LoadProfile from "./components/profile/LoadProfile.vue";
+import NoProfile from "./components/profile/NoProfile.vue";
 
-import { useLoggedStore } from "./store/loggedStore";
+import { useLoggedStore } from "./store/user/loggedStore";
 
 const loggedStore = useLoggedStore();
 

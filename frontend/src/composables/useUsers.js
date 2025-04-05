@@ -1,5 +1,5 @@
 import { getUserProfile } from "@/helpers/getUserProfile";
-import { useProfileStore } from "@/store/profileStore";
+import { useProfileStore } from "@/store/user/profileStore";
 
 export const useUser = async (username) => {
 	const profile = await getUserProfile(username);

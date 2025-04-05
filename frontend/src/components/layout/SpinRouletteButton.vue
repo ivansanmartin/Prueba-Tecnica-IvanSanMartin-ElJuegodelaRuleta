@@ -8,8 +8,8 @@
 <script setup>
 import { useRoulette } from '@/composables/useRoulette';
 import { defineProps } from 'vue';
-import { useStoppedRoulette } from "@/store/stoppedRouletteStore"
-import { useLoadingStore } from '@/store/loadingStore';
+import { useStoppedRoulette } from "@/store/roulette/stoppedRouletteStore"
+import { useLoadingStore } from '@/store/game/loadingStore';
 
 const stoppedRoulette = useStoppedRoulette();
 const loadingStore = useLoadingStore();

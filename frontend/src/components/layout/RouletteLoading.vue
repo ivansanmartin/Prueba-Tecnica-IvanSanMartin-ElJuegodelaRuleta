@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { useLoadingStore } from '@/store/loadingStore';
+import { useLoadingStore } from '@/store/game/loadingStore';
 
 const loadingStore = useLoadingStore();
 </script>

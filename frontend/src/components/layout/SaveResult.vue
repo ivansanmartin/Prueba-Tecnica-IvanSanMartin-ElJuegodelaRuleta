@@ -17,8 +17,8 @@
 
 <script setup>
 import { updateOrCreateUser } from '@/helpers/updateOrCreateUser';
-import { useProfileStore } from '@/store/profileStore';
-import { useLastProfitStore } from '@/store/lastProfitStore';
+import { useProfileStore } from '@/store/user/profileStore';
+import { useLastProfitStore } from '@/store/game/lastProfitStore';
 import { ref } from 'vue';
 
 

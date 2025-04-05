@@ -1,4 +1,4 @@
-import { useSpinRouletteStore } from "@/store/spinRouletteStore";
+import { useSpinRouletteStore } from "@/store/roulette/spinRouletteStore";
 import { getSpinRoulette } from "@/helpers/getSpinRoulette";
 
 export const useRoulette = async () => {

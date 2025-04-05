@@ -16,8 +16,8 @@
 </template>
 
 <script setup>
-import { useBalanceStore } from '@/store/balanceStore';
-import { useProfileStore } from '@/store/profileStore';
+import { useBalanceStore } from '@/store/game/balanceStore';
+import { useProfileStore } from '@/store/user/profileStore';
 
 const balanceStore = useBalanceStore();
 const profileStore = useProfileStore();

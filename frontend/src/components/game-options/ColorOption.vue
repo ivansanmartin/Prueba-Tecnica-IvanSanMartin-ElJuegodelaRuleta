@@ -65,17 +65,17 @@
 </template>
 
 <script setup>
-import SpinRouletteButton from '../SpinRouletteButton.vue';
-import RouletteLoading from '../RouletteLoading.vue';
-import SaveResult from '../SaveResult.vue';
-import { useSpinRouletteStore } from '@/store/spinRouletteStore';
-import { useStoppedRoulette } from '@/store/stoppedRouletteStore';
-import { useBalanceStore } from "@/store/balanceStore";
-import { useLoadingStore } from '@/store/loadingStore';
-import { useBetStore } from '@/store/betStore';
-import { useGameResultStore } from '@/store/gameResultStore';
-import { useLoggedStore } from '@/store/loggedStore';
-import { useLastProfitStore } from '@/store/lastProfitStore';
+import SpinRouletteButton from '../layout/SpinRouletteButton.vue';
+import RouletteLoading from '../layout/RouletteLoading.vue';
+import SaveResult from '../layout/SaveResult.vue';
+import { useSpinRouletteStore } from '@/store/roulette/spinRouletteStore';
+import { useStoppedRoulette } from '@/store/roulette/stoppedRouletteStore';
+import { useBalanceStore } from "@/store/game/balanceStore";
+import { useLoadingStore } from '@/store/game/loadingStore';
+import { useBetStore } from '@/store/game/betStore';
+import { useGameResultStore } from '@/store/user/gameResultStore';
+import { useLoggedStore } from '@/store/user/loggedStore';
+import { useLastProfitStore } from '@/store/game/lastProfitStore';
 import { useGame } from '@/composables/useGame';
 import { ref, computed, watch } from 'vue';
 

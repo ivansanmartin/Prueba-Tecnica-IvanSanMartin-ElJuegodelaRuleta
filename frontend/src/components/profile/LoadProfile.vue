@@ -31,8 +31,8 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { useBalanceStore } from "@/store/balanceStore";
-import { useLoggedStore } from "@/store/loggedStore";
+import { useBalanceStore } from "@/store/game/balanceStore";
+import { useLoggedStore } from "@/store/user/loggedStore";
 import { useUser } from "@/composables/useUsers";
 
 const username = ref("");
