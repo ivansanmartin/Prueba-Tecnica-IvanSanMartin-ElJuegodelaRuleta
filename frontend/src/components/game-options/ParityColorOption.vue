@@ -33,7 +33,7 @@
             <h6>Resultado de la ruleta: </h6>
         </div>
         <div class="results-roulette d-flex flex-column align-items-start mt-3">
-            <p>Número y paridad: <span><small class="badge text-bg-primary">{{ rouletteStore.roulette.number }}</small> | <small class="badge text-bg-primary">{{ parityObject[rouletteStore.roulette.parity] }}</small></span></p>
+            <p>Número, color y paridad: <span><small class="badge text-bg-primary">{{ rouletteStore.roulette.number }}</small> | <small class="badge text-bg-primary">{{ colorObject[rouletteStore.roulette.color] }}</small> | <small class="badge text-bg-primary">{{ parityObject[rouletteStore.roulette.parity] }}</small></span></p>
             <p>Color y paridad apostado: <span><small class="badge text-bg-primary">{{ color == "red" ? "🔴" : color == "green" ? "🟢" : "⚫"}}</small> | <small class="badge text-bg-primary">{{ parityObject[parity] }}</small></span>
             </p>
         </div>
@@ -54,9 +54,14 @@ import { useLoadingStore } from "@/store/loadingStore";
 const parity = ref("");
 const color = ref("");
 const showResult = ref(false);
-const parityObject= ref({
+const parityObject = ref({
     pair: "Par",
     odd: "Impar"
+})
+
+const colorObject = ref({
+    black: "Negro",
+    red: "Rojo"
 })
 
 const rouletteStore = useSpinRouletteStore();

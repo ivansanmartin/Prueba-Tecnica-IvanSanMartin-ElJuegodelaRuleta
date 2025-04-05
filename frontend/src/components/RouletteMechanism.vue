@@ -23,6 +23,10 @@
         </div>
       </form>
     </div>
+    
+    <div class="criterion-errors mt-4">
+      <p v-if="criterionNotMet" class="text-warning">{{ errorMessage }}</p>
+    </div>
 
     <div class="game-options text-center mt-5 d-flex flex-column">
       <h3>¿A qué desea apostar?</h3>
@@ -30,7 +34,7 @@
       <div class="options mt-3 d-flex flex-column align-items-center">
 
         <div>
-          <select name="betType" @change="getSelectedOption($event)" :disabled="(balance == 0 || bet == 0)" id="betType"
+          <select name="betType" @change="getSelectedOption($event)" :disabled="(balance == 0 || bet == 0 || criterionNotMet)" id="betType"
             class="form-select">
             <option selected>Seleccione un tipo de apuesta</option>
             <option value="0">Apostar por un color</option>
@@ -59,24 +63,18 @@ import NumberColor from "./game-options/NumberColorOption.vue"
 import ParityColorOption from "./game-options/ParityColorOption.vue"
 import { useBalanceStore } from "@/store/balanceStore"
 
-import { ref, watch } from "vue"
+import { ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 
 const selectedBetType = ref(null);
 const bet = ref(0);
+const criterionNotMet = ref(false);
+const errorMessage = ref("");
 
 const balanceStore = useBalanceStore();
 
 const { balance } = storeToRefs(balanceStore)
 
-watch(balance, (val) => {
-  if (!balance.value) {
-    balance.value = 0
-  }
-  if (val < 0) {
-    balance.value = Math.abs(val);
-  }
-});
 
 watch(bet, (val) => {
   if (!bet.value) {
@@ -87,14 +85,37 @@ watch(bet, (val) => {
   }
 });
 
+watch(
+  [() => balance.value, () => bet.value],
+  ([newBalance, newBet]) => {
+    if (!newBalance) {
+      balance.value = 0
+    }
+    if (newBalance < 0) {
+      balance.value = Math.abs(val);
+    }
+
+    if (!newBet) {
+      bet.value = 0
+    }
+    if (newBet < 0) {
+      bet.value = Math.abs(val);
+    }
+
+    if (newBalance < newBet) {
+      errorMessage.value = "No tiene fondos suficientes para apostar."
+      criterionNotMet.value = true;
+    } else {
+      criterionNotMet.value = false;
+    }
+  }
+)
 
 const getSelectedOption = (event) => {
   selectedBetType.value = event.target.value;
 };
 
-
 </script>
-
 
 <style scoped>
 .game-options {

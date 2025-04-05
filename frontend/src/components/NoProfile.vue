@@ -4,7 +4,7 @@
             <div class="card-body">
                 <div class="balance text-break">
                     <h6 class="mb-2 text-primary">Balance: </h6>
-                    <i class="text-success fa-solid fa-dollar-sign"></i><span>{{ balance }}</span>
+                    <i class="text-success fa-solid fa-dollar-sign"></i><span>{{ balanceStore.balance }}</span>
                 </div>
             </div>
         </div>
@@ -14,10 +14,7 @@
 
 <script setup>
 import { useBalanceStore } from '@/store/balanceStore';
-import { storeToRefs } from "pinia";
-
 
 const balanceStore = useBalanceStore();
-const { balance } = storeToRefs(balanceStore);
 
 </script>

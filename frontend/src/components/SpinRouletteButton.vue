@@ -43,10 +43,10 @@ const spinRoulette = async () => {
   roulette.style.transition = "transform 3s ease-out";
   roulette.style.transform = `rotate(${finalRotation}deg)`;
 
-  loadingStore.startLoading(true);
+  loadingStore.startLoading();
   setTimeout(() => {
     stoppedRoulette.setStopped(true);
-    loadingStore.stopLoading(false)
+    loadingStore.stopLoading()
   }, 3400)
 }
 
