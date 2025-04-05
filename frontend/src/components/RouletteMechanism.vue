@@ -1,7 +1,5 @@
 <template>
-
   <div class="wrapper d-flex flex-column align-items-center">
-
     <div class="arrow">
     </div>
     <div class="roulette">

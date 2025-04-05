@@ -1,6 +1,6 @@
 <template>
   <div class="spin-button">
-    <button class="btn btn-secondary mt-5" @click="spinRoulette" :disabled="isDisabled">Apostar</button>
+    <button class="btn btn-secondary mt-3" @click="spinRoulette" :disabled="isDisabled">Apostar</button>
   </div>
 </template>
 
@@ -9,8 +9,10 @@
 import { useRoulette } from '@/composables/useRoulette';
 import { defineProps } from 'vue';
 import { useStoppedRoulette } from "@/store/stoppedRouletteStore"
+import { useLoadingStore } from '@/store/loadingStore';
 
 const stoppedRoulette = useStoppedRoulette();
+const loadingStore = useLoadingStore();
   
 const props = defineProps({ isDisabled: Boolean })
 
@@ -41,9 +43,11 @@ const spinRoulette = async () => {
   roulette.style.transition = "transform 3s ease-out";
   roulette.style.transform = `rotate(${finalRotation}deg)`;
 
+  loadingStore.startLoading(true);
   setTimeout(() => {
     stoppedRoulette.setStopped(true);
-  }, 3500)
+    loadingStore.stopLoading(false)
+  }, 3400)
 }
 
 </script>
