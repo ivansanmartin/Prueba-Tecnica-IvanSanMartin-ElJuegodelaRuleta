@@ -4,8 +4,8 @@
             <span class="input-group-text"><span><small>🔴</small></span>|<span><small>⚫</small></span></span>
             <select name="color" v-model="color" id="color" class="form-select">
                 <option value="">Seleccione algún color</option>
-                <option value="rojo">Rojo</option>
-                <option value="negro">Negro</option>
+                <option value="red">Rojo</option>
+                <option value="black">Negro</option>
             </select>
         </div>
 
@@ -27,15 +27,33 @@
     </div>
 
     <RouletteLoading></RouletteLoading>
-  
+
     <div v-if="rouletteStore.roulette != null && showResult" class="alert alert-secondary mt-4">
         <div class="title">
             <h6>Resultado de la ruleta: </h6>
         </div>
-        <div class="results-roulette d-flex flex-column align-items-start mt-3">
-            <p>Número, color y paridad: <span><small class="badge text-bg-primary">{{ rouletteStore.roulette.number }}</small> | <small class="badge text-bg-primary">{{ colorObject[rouletteStore.roulette.color] }}</small> | <small class="badge text-bg-primary">{{ parityObject[rouletteStore.roulette.parity] }}</small></span></p>
-            <p>Color y paridad apostado: <span><small class="badge text-bg-primary">{{ color == "red" ? "🔴" : color == "green" ? "🟢" : "⚫"}}</small> | <small class="badge text-bg-primary">{{ parityObject[parity] }}</small></span>
-            </p>
+        <div class="results-roulette d-flex flex-column mt-3">
+            <div class="d-flex flex-column align-items-start">
+                <p>
+                    Número, color y paridad: <span><small class="badge text-bg-primary">{{ rouletteStore.roulette.number}}</small> | 
+                    <small class="badge text-bg-primary">{{rouletteStore.roulette.color == "red" ? "🔴" : rouletteStore.roulette.color == "green" ? "🟢" : "⚫"}}</small> | 
+                    <small class="badge text-bg-primary">{{parityObject[rouletteStore.roulette.parity]}}</small></span></p>
+                <p>
+                    Color y paridad apostado: <span><small class="badge text-bg-primary">
+                        {{ finalColor == "red" ? "🔴" : color == "green" ? "🟢" : "⚫"}}</small> | <small class="badge text-bg-primary">{{parityObject[finalParity]}}</small></span>
+                </p>
+
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <p v-if="wonColorAndParityBet" class="mt-3 text-success fw-bold">
+                    ¡Ganaste! 🎉
+                </p>
+                <p v-else-if="showResult" class="mt-3 text-danger fw-bold">
+                    Perdiste 😢
+                </p>
+            </div>
+
         </div>
     </div>
 
@@ -53,6 +71,8 @@ import { useLoadingStore } from "@/store/loadingStore";
 
 const parity = ref("");
 const color = ref("");
+const finalParity = ref("")
+const finalColor = ref ("")
 const showResult = ref(false);
 const parityObject = ref({
     pair: "Par",
@@ -69,20 +89,30 @@ const stoppedRoulette = useStoppedRoulette();
 const balanceStore = useBalanceStore();
 const loadingStore = useLoadingStore();
 
+const wonColorAndParityBet = computed(() => {
+  return (
+    showResult.value &&
+    rouletteStore.roulette &&
+    rouletteStore.roulette.color === finalColor.value &&
+    rouletteStore.roulette.parity === finalParity.value
+  );
+});
 
 const isDisabledButton = computed(() => {
     return parity.value === "" || color.value === "" || loadingStore.isLoading;
 });
 
 watch(
-  [() => stoppedRoulette.isStopped, () => loadingStore.isLoading],
-  ([stopped, loading]) => {
-    showResult.value = false;
+    [() => stoppedRoulette.isStopped, () => loadingStore.isLoading],
+    ([stopped, loading]) => {
+        showResult.value = false;
 
-    if (stopped && !loading) {
-      showResult.value = true;
+        if (stopped && !loading) {
+            finalColor.value = color.value
+            finalParity.value = parity.value
+            showResult.value = true;
+        }
     }
-  }
 );
 
 </script>
