@@ -30,13 +30,24 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] UserDto user)
+        public async Task<IActionResult> CreateUser([FromBody] UserDto userDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var result = await _userService.CreateOrUpdateUser(user);
+            var result = await _userService.CreateUser(userDto);
 
             return Ok(result);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser([FromBody] UserDto userDto)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var result = await _userService.UpdateUser(userDto);
+
+            return Ok(result);
+
         }
     }
 }

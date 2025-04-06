@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace backend.Controllers.Dtos
 {
-    public class WinResponseDto
+    public class ApiResponse<T>
     {
-        public bool isWinner { get; set; }
-        public int AmountWon { get; set; } 
+        public bool Ok { get; set; }
         public string Message { get; set; } = string.Empty;
+        public T? Data { get; set; }
     }
 }

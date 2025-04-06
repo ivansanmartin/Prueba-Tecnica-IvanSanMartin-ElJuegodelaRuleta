@@ -17,6 +17,7 @@ namespace backend.Services
             string? message = amountWin > 0 ? $"Haz recibido ${amountWin} de ganancia, ¡felicidades!" : "No haz obtenido ganacias :("; 
             var newWinResponse = new WinResponseDto 
             {
+                isWinner = winDto.Winning,
                 AmountWon = amountWin,
                 Message = message
             };
@@ -28,6 +29,7 @@ namespace backend.Services
         {
             var newLostResponse = new LoseResponseDto
                 {
+                    isWinner = winDto.Winning,
                     AmountLost = winDto.BetAmount,
                     Message = $"Haz perdido ${winDto.BetAmount}"
                 };

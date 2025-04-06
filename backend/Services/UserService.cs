@@ -22,23 +22,8 @@ namespace backend.Services
             return _context.User.FirstOrDefault(user => user.Username == username);
         }
 
-        public async Task<UserDto> CreateOrUpdateUser(UserDto userDto)
+        public async Task<ApiResponse<UserDto>> CreateUser(UserDto userDto)
         {
-            var existngUser = _context.User.FirstOrDefault(user => user.Username == userDto.Username);
-
-            if (existngUser != null)
-            {
-                existngUser.Amount += userDto.Amount;
-
-                await _context.SaveChangesAsync();
-
-                return new UserDto
-                {
-                    Username = existngUser.Username,
-                    Amount = existngUser.Amount
-                };
-            }
-
             var newUser = new User 
             {
                 Username = userDto.Username,
@@ -48,7 +33,41 @@ namespace backend.Services
             _context.User.Add(newUser);
             await _context.SaveChangesAsync();
 
-            return userDto;
+            return new ApiResponse<UserDto>
+            {
+                Ok = true,
+                Message = "Usuario creado correctamente",
+                Data = userDto
+            };
+        }
+        
+        public async Task<ApiResponse<UserDto>> UpdateUser(UserDto userDto)
+        {
+            var existngUser = _context.User.FirstOrDefault(user => user.Username == userDto.Username);
+
+            if (existngUser != null)
+            {
+                existngUser.Amount += userDto.Amount;
+
+                await _context.SaveChangesAsync();
+
+                return new ApiResponse<UserDto>
+                {
+                    Ok = true,
+                    Message = "Usuario actualizado correctamente",
+                    Data = new UserDto
+                    {
+                        Username = existngUser.Username,
+                        Amount = existngUser.Amount
+                    }
+                };
+            }
+
+            return new ApiResponse<UserDto>
+            {
+                Ok = false,
+                Message = "No se ha encontrado al usuario"
+            };
         }
 
     }

@@ -26,6 +26,7 @@ namespace backend.Controllers
             if (!winDto.Winning) {
                 LoseResponseDto loseResponseDto = _gameService.CalculateLoseAmount(winDto);
                 return Ok(new {
+                    is_winner = loseResponseDto.isWinner,
                     amount_lost = loseResponseDto.AmountLost,
                     message = loseResponseDto.Message
                 });
@@ -34,6 +35,7 @@ namespace backend.Controllers
             WinResponseDto winResponseDto = _gameService.CalculateWinAmount(winDto);
 
             return Ok(new {
+                is_winner = winResponseDto.isWinner,
                 amount_won = winResponseDto.AmountWon,
                 message = winResponseDto.Message
             });

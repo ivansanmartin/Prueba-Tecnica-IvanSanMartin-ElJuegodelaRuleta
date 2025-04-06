@@ -10,6 +10,7 @@ namespace backend.Services
     public interface IUserService
     {
         User? GetByUsername(string username);
-        Task<UserDto> CreateOrUpdateUser(UserDto userDto);
+        Task<ApiResponse<UserDto>> CreateUser(UserDto userDto);
+        Task<ApiResponse<UserDto>> UpdateUser(UserDto userDto);
     }
 }
