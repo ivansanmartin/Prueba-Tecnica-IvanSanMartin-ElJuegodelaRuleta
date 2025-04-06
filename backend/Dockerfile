@@ -4,11 +4,11 @@ WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY *.sln .
-COPY backend/*.csproj ./backend/
+COPY ./*.csproj ./backend/
 RUN dotnet restore
 
 # copy everything else and build app
-COPY backend/. ./backend/
+COPY . ./backend/
 WORKDIR /source/backend
 RUN dotnet publish -c release -o /app --no-restore
 
