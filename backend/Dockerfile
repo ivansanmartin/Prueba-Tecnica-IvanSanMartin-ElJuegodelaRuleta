@@ -5,7 +5,7 @@ WORKDIR /source
 # copy csproj and restore as distinct layers
 COPY backend.sln .
 COPY src/backend.csproj src/
-RUN dotnet restore --source https://api.nuget.org/v3/index.json
+RUN dotnet restore backend.sln --source https://api.nuget.org/v3/index.json
 
 # copy everything else and build app
 COPY src/ src/
