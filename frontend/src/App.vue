@@ -2,15 +2,17 @@
   <Header></Header>
 
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-12 d-flex justify-content-between">
+    <div class="d-flex justify-content-end">
+      <LoadProfile v-if="!loggedStore.isLogged"></LoadProfile>
+    </div>
+    <div class="d-flex profiles">
+      <div class="d-flex justify-content-start">
         <div v-if="!loggedStore.isLogged">
           <NoProfile></NoProfile>
         </div>
-        <div v-if="loggedStore.isLogged" class="profile">
+        <div v-if="loggedStore.isLogged">
           <Profile></Profile>
         </div>
-        <LoadProfile v-if="!loggedStore.isLogged"></LoadProfile>
       </div>
     </div>
 

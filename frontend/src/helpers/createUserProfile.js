@@ -1,10 +1,8 @@
-import axios from "axios";
-
-const API_ENDPOINT = "https://roulette.ivansanmartin.dev/api/users";
+import apiClient from "@/api/apiClient";
 
 export const createUser = async (body) => {
 	try {
-		const response = await axios.post(API_ENDPOINT, body, {
+		const response = await apiClient.post("/users", body, {
             headers: {
                 "Content-Type": "application/json"
             }

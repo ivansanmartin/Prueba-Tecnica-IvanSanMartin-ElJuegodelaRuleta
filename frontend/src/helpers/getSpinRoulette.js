@@ -1,9 +1,7 @@
-import axios from "axios";
-
-const API_ENDPOINT = "https://roulette.ivansanmartin.dev/api/spin-roulette";
+import apiClient from "@/api/apiClient";
 
 export const getSpinRoulette = async () => {
-    const response = await axios.get(API_ENDPOINT);
+    const response = await apiClient.get("/spin-roulette");
 
     return response.data;
 }

@@ -10,7 +10,7 @@
     </div>
 
     <div class="first-game-roulette">
-      <h3>Comienze agregando un saldo y apuesta</h3>
+      <h3 class="text-center">Comienze agregando un saldo y apuesta</h3>
       <form class="d-flex gap-4 mt-4">
         <div class="input-group">
           <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i></span>

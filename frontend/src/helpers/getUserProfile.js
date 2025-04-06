@@ -1,10 +1,8 @@
-import axios from "axios";
-
-const API_ENDPOINT = "https://roulette.ivansanmartin.dev/api/users";
+import apiClient from "@/api/apiClient";
 
 export const getUserProfile = async (username) => {
 	try {
-		const response = await axios.get(`${API_ENDPOINT}/${username}`);
+		const response = await apiClient.get(`/users/${username}`);
 		return response.data;
 	} catch (error) {
 		if (error.response && error.response.status === 404) {
