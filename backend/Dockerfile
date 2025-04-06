@@ -9,7 +9,6 @@ RUN dotnet restore --source https://api.nuget.org/v3/index.json
 
 # copy everything else and build app
 COPY src/ src/
-WORKDIR /source/src
 RUN dotnet publish src/backend.csproj -c release -o /app
 
 # final stage/image
