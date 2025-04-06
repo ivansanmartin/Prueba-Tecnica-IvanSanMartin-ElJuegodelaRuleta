@@ -3,14 +3,14 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY *.sln ./
-COPY src/*.csproj ./src/
+COPY backend.sln .
+COPY src/backend.csproj src/
 RUN dotnet restore --source https://api.nuget.org/v3/index.json
 
 # copy everything else and build app
-COPY src/. ./src/
+COPY src/ src/
 WORKDIR /source/src
-RUN dotnet publish -c release -o /app
+RUN dotnet publish src/backend.csproj -c release -o /app
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
