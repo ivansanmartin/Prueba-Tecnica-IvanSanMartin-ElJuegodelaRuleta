@@ -1,12 +1,12 @@
 replicaCount: 1
 
 image:
-  repository: 192.168.1.200:30002/ivansanmartin/roulette-frontend
+  repository: 192.168.1.200:30002/ivansanmartin/roulette-backend
   pullPolicy: IfNotPresent
   tag: "latest"
 
-nameOverride: "roulette-frontend"
-fullnameOverride: "roulette-frontend"
+nameOverride: "roulette-backend"
+fullnameOverride: "roulette-backend"
 
 namespace: ivansanmartin
 
@@ -27,4 +27,4 @@ securityContext:
   runAsUser: 0
 
 labels:
-  app: roulette-frontend
+  app: roulette-backend
