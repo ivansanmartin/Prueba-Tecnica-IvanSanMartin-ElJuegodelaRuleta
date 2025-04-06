@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_ENDPOINT = "http://localhost:5138/api/users";
+const API_ENDPOINT = "api/users";
 
 export const updateUser = async (body) => {
 	try {

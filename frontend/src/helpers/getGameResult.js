@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_ENDPOINT = "http://localhost:5138/api/winning";
+const API_ENDPOINT = "api/winning";
 
 export const getGameResult = async (body) => {
 	try {
