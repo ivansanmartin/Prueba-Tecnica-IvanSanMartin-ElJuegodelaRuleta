@@ -58,11 +58,13 @@
 
 <script setup>
 
-import ColorOption from "./game-options/ColorOption.vue"
-import NumberColor from "./game-options/NumberColorOption.vue"
-import ParityColorOption from "./game-options/ParityColorOption.vue"
+import ColorOption from "../game-options/ColorOption.vue"
+import NumberColor from "../game-options/NumberColorOption.vue"
+import ParityColorOption from "../game-options/ParityColorOption.vue"
 import { useBalanceStore } from "@/store/game/balanceStore"
 import { useBetStore } from "@/store/game/betStore"
+import { useLastProfitStore } from "@/store/game/lastProfitStore"
+import { useNoAvailableStore } from "@/store/game/noAvailableStore"
 
 import { ref, watch } from "vue";
 import { storeToRefs } from "pinia";
@@ -73,6 +75,8 @@ const errorMessage = ref("");
 
 const balanceStore = useBalanceStore();
 const betStore = useBetStore();
+const lastProfitStore = useLastProfitStore();
+const noAvailableStore = useNoAvailableStore();
 
 const { balance } = storeToRefs(balanceStore)
 const { bet } = storeToRefs(betStore)
@@ -81,7 +85,8 @@ const { bet } = storeToRefs(betStore)
 watch(bet, (val) => {
   if (!bet.value) {
     bet.value = 0
-  }
+  } 
+
   if (val < 0) {
     bet.value = Math.abs(val);
   }
@@ -107,14 +112,17 @@ watch(
     if (newBalance < newBet) {
       errorMessage.value = "No tiene fondos suficientes para apostar."
       criterionNotMet.value = true;
+      noAvailableStore.setAvailable(false)
     } else {
       criterionNotMet.value = false;
+      noAvailableStore.setAvailable(true)
     }
   }
 )
 
 const getSelectedOption = (event) => {
   selectedBetType.value = event.target.value;
+  lastProfitStore.setProfit(null);
 };
 
 </script>

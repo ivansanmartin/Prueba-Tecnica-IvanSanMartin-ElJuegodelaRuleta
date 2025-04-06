@@ -42,32 +42,20 @@
     </div>
   </div>
 
-  <div v-if="gameResultStore.result && !gameIsLaoding" class="alert alert-secondary mt-4">
-    <div class="title">
-      <h6 class="badge text-bg-secondary">{{ gameResultStore.result.message }}</h6>
-    </div>
-    <div class="results-roulette d-flex flex-column mt-3">
-      <div class="d-flex flex-column align-items-center">
-        <p>
-          <small class="text-success fw-bold">
-            {{ !gameResultStore.result.is_winner ? "¡Sigue intentandolo!" : "¡Excelente!" }}
-          </small>
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <SaveResult v-if="loggedStore.isLogged && gameResultStore.result && gameResultStore.result.is_winner"></SaveResult>
+  <GameResult v-if="gameResultStore.result && lastProfitStore.profit != null" :result="gameResultStore.result" :loading="gameIsLaoding"/>
 
 
+  <SaveResult v-if="shouldShowSaveResult"></SaveResult>
 
-  <SpinRouletteButton :is-disabled="isDisabled"></SpinRouletteButton>
+
+  <SpinRouletteButton :is-disabled="isDisabled || balanceStore.balance < betStore.bet"></SpinRouletteButton>
 </template>
 
 <script setup>
 import SpinRouletteButton from '../layout/SpinRouletteButton.vue';
 import RouletteLoading from '../layout/RouletteLoading.vue';
 import SaveResult from '../layout/SaveResult.vue';
+import GameResult from '../layout/GameResult.vue';
 import { useSpinRouletteStore } from '@/store/roulette/spinRouletteStore';
 import { useStoppedRoulette } from '@/store/roulette/stoppedRouletteStore';
 import { useBalanceStore } from "@/store/game/balanceStore";
@@ -105,6 +93,12 @@ const wonColorBet = computed(() => {
   );
 });
 
+const shouldShowSaveResult = computed(() => {
+  return loggedStore.isLogged && gameResultStore.result 
+        && gameResultStore.result.is_winner && lastProfitStore.profit 
+        != null && !gameIsLaoding.value
+})
+
 watch(
   [() => stoppedRoulette.isStopped, () => loadingStore.isLoading],
   async ([stopped, loading]) => {
@@ -122,10 +116,7 @@ watch(
       }
 
       await useGame(body);
-
       gameIsLaoding.value = false;
-
-      console.log(gameResultStore.result)
 
       if (gameResultStore.result.is_winner) {
           balanceStore.setBalance(balanceStore.balance + gameResultStore.result.amount_won)

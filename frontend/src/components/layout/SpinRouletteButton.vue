@@ -1,6 +1,6 @@
 <template>
   <div class="spin-button">
-    <button class="btn btn-secondary mt-3" @click="spinRoulette" :disabled="isDisabled">Apostar</button>
+    <button class="btn btn-secondary mt-3" @click="spinRoulette" :disabled="isDisabled || !noAvailableStore.isAvailable">Apostar</button>
   </div>
 </template>
 
@@ -10,9 +10,15 @@ import { useRoulette } from '@/composables/useRoulette';
 import { defineProps } from 'vue';
 import { useStoppedRoulette } from "@/store/roulette/stoppedRouletteStore"
 import { useLoadingStore } from '@/store/game/loadingStore';
+import { useBalanceStore } from '@/store/game/balanceStore';
+import { useBetStore } from '@/store/game/betStore';
+import { useNoAvailableStore } from '@/store/game/noAvailableStore';
 
 const stoppedRoulette = useStoppedRoulette();
 const loadingStore = useLoadingStore();
+const balanceStore = useBalanceStore();
+const betStore = useBetStore();
+const noAvailableStore = useNoAvailableStore();
   
 const props = defineProps({ isDisabled: Boolean })
 

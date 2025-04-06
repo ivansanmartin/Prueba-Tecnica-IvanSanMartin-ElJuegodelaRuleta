@@ -51,7 +51,14 @@
 
     </div>
 
-    <SpinRouletteButton :is-disabled="isDisabledButton"></SpinRouletteButton>
+    <GameResult v-if="gameResultStore.result && lastProfitStore.profit != null" :result="gameResultStore.result"
+        :loading="gameIsLaoding" />
+
+    <SaveResult
+        v-if="shouldShowSaveResult">
+    </SaveResult>
+
+    <SpinRouletteButton :is-disabled="isDisabledButton || balanceStore.balance < betStore.bet"></SpinRouletteButton>
 
 </template>
 
@@ -60,10 +67,17 @@
 import { Colors } from "@/enums/colors";
 import SpinRouletteButton from "../layout/SpinRouletteButton.vue";
 import RouletteLoading from "../layout/RouletteLoading.vue";
+import SaveResult from "../layout/SaveResult.vue";
+import GameResult from "../layout/GameResult.vue";
 import { useSpinRouletteStore } from "@/store/roulette/spinRouletteStore";
 import { useStoppedRoulette } from '@/store/roulette/stoppedRouletteStore';
 import { useBalanceStore } from "@/store/game/balanceStore";
 import { useLoadingStore } from "@/store/game/loadingStore";
+import { useBetStore } from '@/store/game/betStore';
+import { useGameResultStore } from '@/store/user/gameResultStore';
+import { useLoggedStore } from '@/store/user/loggedStore';
+import { useLastProfitStore } from '@/store/game/lastProfitStore';
+import { useGame } from '@/composables/useGame';
 import { ref, watch, computed } from "vue";
 
 const color = ref("");
@@ -72,23 +86,17 @@ const finalColor = ref("");
 const finalNumber = ref();
 const errorMessage = ref("");
 const showResult = ref(false);
+const gameIsLaoding = ref(false);
+
 
 const rouletteStore = useSpinRouletteStore();
 const balanceStore = useBalanceStore();
 const stoppedRoulette = useStoppedRoulette();
 const loadingStore = useLoadingStore();
-
-
-const setColor = (event) => {
-    color.value = event.target.value;
-    validateForm();
-};
-
-const setNumber = (event) => {
-    number.value = event.target.value;
-    validateForm();
-};
-
+const gameResultStore = useGameResultStore();
+const loggedStore = useLoggedStore();
+const betStore = useBetStore();
+const lastProfitStore = useLastProfitStore();
 
 const wonNumberAndColorBet = computed(() => {
     return (
@@ -98,6 +106,11 @@ const wonNumberAndColorBet = computed(() => {
         rouletteStore.roulette.color == finalColor.value
     );
 });
+
+const shouldShowSaveResult = computed(() => {
+    return loggedStore.isLogged && gameResultStore.result
+        && gameResultStore.result.is_winner && lastProfitStore.profit != null && !gameIsLaoding.value
+})
 
 const isDisabledButton = computed(() => {
     if (!color.value || !number.value || loadingStore.isLoading) {
@@ -134,13 +147,30 @@ watch(number, (value) => {
 
 watch(
     [() => stoppedRoulette.isStopped, () => loadingStore.isLoading],
-    ([stopped, loading]) => {
+    async ([stopped, loading]) => {
         showResult.value = false;
+        gameIsLaoding.value = true;
 
         if (stopped && !loading) {
             finalColor.value = color.value
             finalNumber.value = number.value
             showResult.value = true;
+
+            const body = {
+                "betType": 0,
+                "betAmount": betStore.bet,
+                "winning": wonNumberAndColorBet.value
+            }
+
+            await useGame(body);
+            gameIsLaoding.value = false;
+
+            if (gameResultStore.result.is_winner) {
+                balanceStore.setBalance(balanceStore.balance + gameResultStore.result.amount_won)
+                lastProfitStore.setProfit(gameResultStore.result.amount_won)
+            } else {
+                balanceStore.setBalance(balanceStore.balance - gameResultStore.result.amount_lost)
+            }
         }
     }
 );

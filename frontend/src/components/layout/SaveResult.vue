@@ -1,7 +1,7 @@
 <template>
     <div class="load-profile-game mt-3 m-2 d-flex flex-column align-items-center mt-4">
         <button class="btn btn-success" @click="saveProfit" :disabled="dataSave">
-            <span>{{ dataSave ? "Ganancias guardadas al perfil: " + profileStore.profile.username : "Guardar ganacia en el perfil" }}</span>
+            <span>{{ dataSave ? "Ganancias guardadas al perfil: " + profileStore.profile.username : "Guardar ganancia en el perfil" }}</span>
         </button>
     </div>
 
