@@ -25,12 +25,7 @@ namespace backend.Services
                 return new ApiResponse<UserDto>
                 {
                     Ok = true,
-                    Message = "Usuario encontrado",
-                    Data = new UserDto
-                    {
-                        Username = user.Username,
-                        Amount = user.Amount
-                    }
+                    Message = "Usuario encontrado"
                 };
 
             }
