@@ -1,7 +1,7 @@
 <template>
     <div class="load-profile-game mt-3 m-2 d-flex flex-column align-items-center mt-4">
         <button class="btn btn-success" @click="saveProfit" :disabled="dataSave">
-            <span>{{ dataSave ? "Ganancias guardadas al perfil: " + profileStore.profile.username : "Guardar ganancia en el perfil" }}</span>
+            <span>{{ dataSave ? "Ganancias guardadas al perfil: " + profileStore.profile.data.username : "Guardar ganancia en el perfil" }}</span>
         </button>
     </div>
 
@@ -9,14 +9,14 @@
         <div class="spinner-border text-danger" role="status">
         </div>
         <div>
-            <p>Guardando ganancias al perfil: {{ profileStore.profile.username }}</p>
+            <p>Guardando ganancias al perfil: {{ profileStore.profile.data.username }}</p>
         </div>
     </div>
 
 </template>
 
 <script setup>
-import { updateOrCreateUser } from '@/helpers/updateOrCreateUser';
+import { updateUser } from '@/helpers/updateUser';
 import { useProfileStore } from '@/store/user/profileStore';
 import { useLastProfitStore } from '@/store/game/lastProfitStore';
 import { ref } from 'vue';
@@ -31,11 +31,11 @@ const saveProfit = async () => {
     dataSave.value = false;
     isLoading.value = true;
     const body = {
-        "username": profileStore.profile.username,
+        "username": profileStore.profile.data.username,
         "amount": lastProfitStore.profit
     }
 
-    await updateOrCreateUser(body)
+    await updateUser(body)
 
     dataSave.value = true;
 

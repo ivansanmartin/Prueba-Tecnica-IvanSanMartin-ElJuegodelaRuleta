@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_ENDPOINT = "http://localhost:5138/api/users";
 
-export const updateOrCreateUser = async (body) => {
+export const createUser = async (body) => {
 	try {
 		const response = await axios.post(API_ENDPOINT, body, {
             headers: {

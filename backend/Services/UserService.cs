@@ -17,9 +17,29 @@ namespace backend.Services
             _context = context;
         }
 
-        public User? GetByUsername(string username)
+        public ApiResponse<UserDto> GetByUsername(string username)
         {
-            return _context.User.FirstOrDefault(user => user.Username == username);
+            User? user = _context.User.FirstOrDefault(user => user.Username == username);
+
+            if (user != null) {
+                return new ApiResponse<UserDto>
+                {
+                    Ok = true,
+                    Message = "Usuario encontrado",
+                    Data = new UserDto
+                    {
+                        Username = user.Username,
+                        Amount = user.Amount
+                    }
+                };
+
+            }
+
+            return new ApiResponse<UserDto>
+            {
+                Ok = false,
+                Message = "Usuario no encontrado",
+            };
         }
 
         public async Task<ApiResponse<UserDto>> CreateUser(UserDto userDto)

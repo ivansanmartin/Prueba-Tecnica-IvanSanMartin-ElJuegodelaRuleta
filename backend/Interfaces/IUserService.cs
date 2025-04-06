@@ -9,7 +9,7 @@ namespace backend.Services
 {
     public interface IUserService
     {
-        User? GetByUsername(string username);
+        ApiResponse<UserDto> GetByUsername(string username);
         Task<ApiResponse<UserDto>> CreateUser(UserDto userDto);
         Task<ApiResponse<UserDto>> UpdateUser(UserDto userDto);
     }
