@@ -1,8 +1,9 @@
 <template>
   <div class="wrapper d-flex flex-column align-items-center">
-    <div class="arrow">
-    </div>
+
     <div class="roulette">
+      <div class="arrow">
+      </div>
       <div class="wheel spin">
         <img class="roulette-wheel" src="/images/roulette.png" style="width: 100%;">
       </div>

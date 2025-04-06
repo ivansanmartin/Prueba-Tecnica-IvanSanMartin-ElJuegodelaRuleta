@@ -53,3 +53,31 @@ body {
 }
 
 
+@media (max-width: 768px) {
+  .wrapper .arrow {
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-top: 50px solid #C60200;
+    top: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrapper .arrow {
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-top: 40px solid #C60200;
+    top: 60px;
+  }
+}
+
+@media (max-width: 380px) {
+  .wrapper .arrow {
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-top: 40px solid #C60200;
+    top: 45px;
+  }
+}
+
+
