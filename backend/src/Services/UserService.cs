@@ -44,6 +44,17 @@ namespace backend.Services
 
         public async Task<ApiResponse<UserDto>> CreateUser(UserDto userDto)
         {
+            User? user = _context.User.FirstOrDefault(user => user.Username == userDto.Username);
+
+            if (user) {
+                return new ApiResponse<UserDto>
+                {
+                    Ok = false,
+                    Message = "El usuario ya existe",
+                    Data = userDto
+                };
+            }
+
             var newUser = new User 
             {
                 Username = userDto.Username,
