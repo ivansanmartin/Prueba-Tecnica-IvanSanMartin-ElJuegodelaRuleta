@@ -5,7 +5,7 @@ WORKDIR /source
 # copy csproj and restore as distinct layers
 COPY ./*.sln ./
 COPY ./*.csproj ./
-RUN dotnet restore
+RUN dotnet restore --source https://api.nuget.org/v3/index.json
 
 # copy everything else and build app
 COPY ./ ./
