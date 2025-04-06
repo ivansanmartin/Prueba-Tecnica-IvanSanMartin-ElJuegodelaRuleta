@@ -11,6 +11,7 @@
                     type="text"
                     name="username"
                     v-model="username"
+                    @input="sanitizeUsername"
                     id="username"
                     class="form-control"
                     placeholder="Ingrese su nombre de usuario (ejemplo: ivan)"
@@ -34,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { useBalanceStore } from "@/store/game/balanceStore";
 import { useLoggedStore } from "@/store/user/loggedStore";
 import { useProfileStore } from "@/store/user/profileStore";
@@ -55,6 +56,10 @@ const lastProfitStore = useLastProfitStore();
 const isDisabledButton = computed(() => {
     return username.value.length == 0;
 });
+
+const sanitizeUsername = (event) => {
+  event.target.value = event.target.value.replace(/[^a-zA-Z0-9]/g, '');
+};
 
 const loadProfile = async () => {
     profileNotFound.value = false;
