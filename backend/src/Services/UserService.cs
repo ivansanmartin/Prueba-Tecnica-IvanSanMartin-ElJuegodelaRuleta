@@ -46,7 +46,7 @@ namespace backend.Services
         {
             User? user = _context.User.FirstOrDefault(user => user.Username == userDto.Username);
 
-            if (user) {
+            if (user != null) {
                 return new ApiResponse<UserDto>
                 {
                     Ok = false,
