@@ -4,11 +4,12 @@ WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY ./*.sln ./
-COPY ./*.csproj ./
+COPY /src/*.csproj ./src/
 RUN dotnet restore --source https://api.nuget.org/v3/index.json
 
 # copy everything else and build app
-COPY ./ ./
+COPY src/. ./src/
+WORKDIR /source/src
 RUN dotnet publish -c release -o /app
 
 # final stage/image
