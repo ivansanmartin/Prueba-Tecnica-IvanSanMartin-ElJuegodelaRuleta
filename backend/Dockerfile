@@ -3,8 +3,8 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY ./*.sln ./
-COPY /src/*.csproj ./src/
+COPY *.sln ./
+COPY src/*.csproj ./src/
 RUN dotnet restore --source https://api.nuget.org/v3/index.json
 
 # copy everything else and build app
