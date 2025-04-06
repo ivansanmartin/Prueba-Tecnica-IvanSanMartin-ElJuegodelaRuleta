@@ -40,7 +40,7 @@
                         <small class="badge text-bg-primary">{{ rouletteStore.roulette.color == "red" ? "🔴" :
                             rouletteStore.roulette.color == "green" ? "🟢" : "⚫" }}</small> |
                         <small class="badge text-bg-primary">{{ parityObject[rouletteStore.roulette.parity]
-                            }}</small></span>
+                        }}</small></span>
                 </p>
                 <p>
                     Color y paridad apostado: <span><small class="badge text-bg-primary">
@@ -62,14 +62,14 @@
         </div>
     </div>
 
-    <GameResult v-if="gameResultStore.result && lastProfitStore.profit != null" :result="gameResultStore.result"
+    <GameResult v-if="gameResultStore.result || lastProfitStore.profit != null" :result="gameResultStore.result"
         :loading="gameIsLaoding" />
 
-    <SaveResult
-        v-if="shouldShowSaveResult && lastProfitStore.profit > 0"">
+    <SaveResult v-if="shouldShowSaveResult && lastProfitStore.profit > 0"">
     </SaveResult>
 
-    <SpinRouletteButton :is-disabled="isDisabledButton || balanceStore.balance < betStore.bet"></SpinRouletteButton>
+    <SpinRouletteButton :is-disabled="isDisabledButton || balanceStore.balance < betStore.bet">
+        </SpinRouletteButton>
 </template>
 
 <script setup>
@@ -138,7 +138,6 @@ watch(
     async ([stopped, loading]) => {
         showResult.value = false;
         gameIsLaoding.value = true;
-
 
         if (stopped && !loading) {
             finalColor.value = color.value;

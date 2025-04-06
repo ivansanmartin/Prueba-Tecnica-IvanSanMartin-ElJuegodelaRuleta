@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_ENDPOINT = "api/users";
+const API_ENDPOINT = "https://roulette.ivansanmartin.dev/api/users";
 
 export const updateUser = async (body) => {
 	try {

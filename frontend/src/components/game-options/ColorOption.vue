@@ -42,7 +42,7 @@
     </div>
   </div>
 
-  <GameResult v-if="gameResultStore.result && lastProfitStore.profit != null" :result="gameResultStore.result" :loading="gameIsLaoding"/>
+  <GameResult v-if="gameResultStore.result || lastProfitStore.profit != null" :result="gameResultStore.result" :loading="gameIsLaoding"/>
 
 
   <SaveResult v-if="shouldShowSaveResult && lastProfitStore.profit > 0"></SaveResult>
@@ -123,6 +123,7 @@ watch(
           lastProfitStore.setProfit(gameResultStore.result.amount_won);
       } else {
           balanceStore.setBalance(balanceStore.balance - gameResultStore.result.amount_lost);
+          showResult.value = true;
       }
 
     }
