@@ -1,10 +1,10 @@
-# 🎰 Roulette - Prueba Técnica
+# Roulette - Prueba Técnica
 
 Prueba técnica que trata sobre el desarrollo de "El Juego de la Ruleta", frontend realizado utilizando Vue.js y JavaScript, backend construido con ASP.NET Core en .NET 8
 
 ## 📋 Endpoints disponibles
 
-### 🎯 Roulette
+### Roulette
 
 - `GET /api/spin-roulette`  
   Gira la ruleta y devuelve el resultado.
@@ -18,7 +18,7 @@ Respuesta JSON ejemplo:
   }
   ~~~
 
-### 👤 User
+### User
 
 - `GET /api/users/{username}`  
   Obtiene información del usuario por nombre de usuario.
@@ -68,7 +68,7 @@ Respuesta JSON ejemplo:
     }
   ~~~
 
-### 🏆 Winning
+### Winning
 
 - `POST /api/winning`  
   Obtemos monto ganado segun datos del frontend.
