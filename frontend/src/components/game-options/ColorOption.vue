@@ -42,11 +42,10 @@
     </div>
   </div>
 
-  <GameResult v-if="gameResultStore.result || lastProfitStore.profit != null" :result="gameResultStore.result" :loading="gameIsLaoding"/>
-
+  <GameResult v-if="gameResultStore.result && lastProfitStore.profit != null" :result="gameResultStore.result"
+    :loading="gameIsLaoding" />
 
   <SaveResult v-if="shouldShowSaveResult && lastProfitStore.profit > 0"></SaveResult>
-
 
   <SpinRouletteButton :is-disabled="isDisabled || balanceStore.balance < betStore.bet"></SpinRouletteButton>
 </template>
@@ -94,9 +93,9 @@ const wonColorBet = computed(() => {
 });
 
 const shouldShowSaveResult = computed(() => {
-  return loggedStore.isLogged && gameResultStore.result 
-        && gameResultStore.result.is_winner && lastProfitStore.profit 
-        != null && !gameIsLaoding.value
+  return loggedStore.isLogged && gameResultStore.result
+    && gameResultStore.result.is_winner && lastProfitStore.profit
+    != null && !gameIsLaoding.value
 });
 
 watch(
@@ -119,11 +118,11 @@ watch(
       gameIsLaoding.value = false;
 
       if (gameResultStore.result.is_winner) {
-          balanceStore.setBalance(balanceStore.balance + gameResultStore.result.amount_won);
-          lastProfitStore.setProfit(gameResultStore.result.amount_won);
+        balanceStore.setBalance(balanceStore.balance + gameResultStore.result.amount_won);
+        lastProfitStore.setProfit(gameResultStore.result.amount_won);
       } else {
-          balanceStore.setBalance(balanceStore.balance - gameResultStore.result.amount_lost);
-          showResult.value = true;
+        balanceStore.setBalance(balanceStore.balance - gameResultStore.result.amount_lost);
+        showResult.value = true;
       }
 
     }

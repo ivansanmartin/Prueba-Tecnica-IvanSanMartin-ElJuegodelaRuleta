@@ -51,14 +51,14 @@
 
     </div>
 
-    <GameResult v-if="gameResultStore.result || lastProfitStore.profit != null" :result="gameResultStore.result"
+    <GameResult v-if="gameResultStore.result && lastProfitStore.profit != null" :result="gameResultStore.result"
         :loading="gameIsLaoding" />
 
-    <SaveResult
-        v-if="shouldShowSaveResult && lastProfitStore.profit > 0"">
+    <SaveResult v-if="shouldShowSaveResult && lastProfitStore.profit > 0"">
     </SaveResult>
 
-    <SpinRouletteButton :is-disabled="isDisabledButton || balanceStore.balance < betStore.bet"></SpinRouletteButton>
+    <SpinRouletteButton :is-disabled="isDisabledButton || balanceStore.balance < betStore.bet">
+        </SpinRouletteButton>
 
 </template>
 

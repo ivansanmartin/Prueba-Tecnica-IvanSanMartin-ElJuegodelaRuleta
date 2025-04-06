@@ -20,9 +20,13 @@
                 type="button" 
                 class="btn btn-primary mt-2" 
                 @click="loadProfile" 
-                :disabled="isDisabledButton"
+                :disabled="isDisabledButton || isLoading"
             >
-                Cargar
+                <div v-if="isLoading" class="d-flex justify-content-center align-items-center gap-3">
+                    <div  class="spinner-border text-white" role="status"></div>
+                    <small>Cargando perfil...</small>
+                </div>
+                <span v-else>Cargar</span>
             </button>
             <p v-if="profileNotFound" class="text-danger">No se ha encontrado el perfil.</p>
         </div>
@@ -41,6 +45,7 @@ import { createUser } from "@/helpers/createUserProfile";
 const username = ref("");
 const profileNotFound = ref(false);
 const showInput = ref(false);
+const isLoading = ref(false);
 
 const balanceStore = useBalanceStore();
 const loggedStore = useLoggedStore();
@@ -54,6 +59,7 @@ const isDisabledButton = computed(() => {
 const loadProfile = async () => {
     profileNotFound.value = false;
     try {
+        isLoading.value = true;
         const profile = await useUser(username.value);     
 
         if (!profile.ok) {
@@ -70,6 +76,7 @@ const loadProfile = async () => {
 
         balanceStore.setBalance(profile.data.amount);
         lastProfitStore.setProfit(0);
+        isLoading.value = false;
         loggedStore.isLogin();
 
     } catch (error) {
