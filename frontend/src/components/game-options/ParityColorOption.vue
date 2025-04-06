@@ -66,14 +66,14 @@
         :loading="gameIsLaoding" />
 
     <SaveResult
-        v-if="shouldShowSaveResult">
+        v-if="shouldShowSaveResult && lastProfitStore.profit > 0"">
     </SaveResult>
 
     <SpinRouletteButton :is-disabled="isDisabledButton || balanceStore.balance < betStore.bet"></SpinRouletteButton>
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue"
+import { ref, computed, watch } from "vue";
 import SpinRouletteButton from "../layout/SpinRouletteButton.vue";
 import RouletteLoading from "../layout/RouletteLoading.vue";
 import SaveResult from "../layout/SaveResult.vue";
@@ -108,12 +108,12 @@ const lastProfitStore = useLastProfitStore();
 const parityObject = ref({
     pair: "Par",
     odd: "Impar"
-})
+});
 
 const colorObject = ref({
     black: "Negro",
     red: "Rojo"
-})
+});
 
 const wonColorAndParityBet = computed(() => {
     return (
@@ -127,7 +127,7 @@ const wonColorAndParityBet = computed(() => {
 const shouldShowSaveResult = computed(() => {
     return loggedStore.isLogged && gameResultStore.result
         && gameResultStore.result.is_winner && lastProfitStore.profit != null && !gameIsLaoding.value
-})
+});
 
 const isDisabledButton = computed(() => {
     return parity.value === "" || color.value === "" || loadingStore.isLoading;
@@ -141,8 +141,8 @@ watch(
 
 
         if (stopped && !loading) {
-            finalColor.value = color.value
-            finalParity.value = parity.value
+            finalColor.value = color.value;
+            finalParity.value = parity.value;
             showResult.value = true;
 
             const body = {
@@ -155,10 +155,10 @@ watch(
             gameIsLaoding.value = false;
 
             if (gameResultStore.result.is_winner) {
-                balanceStore.setBalance(balanceStore.balance + gameResultStore.result.amount_won)
-                lastProfitStore.setProfit(gameResultStore.result.amount_won)
+                balanceStore.setBalance(balanceStore.balance + gameResultStore.result.amount_won);
+                lastProfitStore.setProfit(gameResultStore.result.amount_won);
             } else {
-                balanceStore.setBalance(balanceStore.balance - gameResultStore.result.amount_lost)
+                balanceStore.setBalance(balanceStore.balance - gameResultStore.result.amount_lost);
             }
         }
     }

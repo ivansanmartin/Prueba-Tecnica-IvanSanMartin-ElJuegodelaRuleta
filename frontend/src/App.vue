@@ -2,22 +2,21 @@
   <Header></Header>
 
   <div class="container-fluid">
-    <div v-if="!loggedStore.isLogged" class="row">
-      <div class="col-12 d-flex justify-content-end">
-        <LoadProfile></LoadProfile>
+    <div class="row">
+      <div class="col-12 d-flex justify-content-between">
+        <div v-if="!loggedStore.isLogged">
+          <NoProfile></NoProfile>
+        </div>
+        <div v-if="loggedStore.isLogged" class="profile">
+          <Profile></Profile>
+        </div>
+        <LoadProfile v-if="!loggedStore.isLogged"></LoadProfile>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-2 col-12 text-center mb-3">
-        <div v-if="loggedStore.isLogged" class="profile">
-          <Profile></Profile>
-        </div>
-        <div v-if="!loggedStore.isLogged">
-          <NoProfile></NoProfile>
-        </div>
       </div>
-
       <div class="col-md-8 col-12">
         <RouletteMechanism></RouletteMechanism>
       </div>

@@ -33,10 +33,10 @@
 import { ref, computed } from "vue";
 import { useBalanceStore } from "@/store/game/balanceStore";
 import { useLoggedStore } from "@/store/user/loggedStore";
+import { useProfileStore } from "@/store/user/profileStore";
+import { useLastProfitStore } from "@/store/game/lastProfitStore";
 import { useUser } from "@/composables/useUsers";
 import { createUser } from "@/helpers/createUserProfile";
-import { useProfileStore } from "@/store/user/profileStore";
-
 
 const username = ref("");
 const profileNotFound = ref(false);
@@ -45,6 +45,7 @@ const showInput = ref(false);
 const balanceStore = useBalanceStore();
 const loggedStore = useLoggedStore();
 const profileStore = useProfileStore();
+const lastProfitStore = useLastProfitStore();
 
 const isDisabledButton = computed(() => {
     return username.value.length == 0;
@@ -59,16 +60,17 @@ const loadProfile = async () => {
             const newProfile = await createUser({
                 username: username.value,
                 amount: 0
-            })
+            });
 
-            profileStore.loadProfile(newProfile)
+            profileStore.loadProfile(newProfile);
             balanceStore.setBalance(newProfile.amount);
-            loggedStore.isLogin()
+            loggedStore.isLogin();
             return;
         }
 
         balanceStore.setBalance(profile.data.amount);
-        loggedStore.isLogin()
+        lastProfitStore.setProfit(0);
+        loggedStore.isLogin();
 
     } catch (error) {
         if (error && error.message && error.message_code === "UNKNOWN_ERROR") {

@@ -35,13 +35,13 @@ const saveProfit = async () => {
         "amount": lastProfitStore.profit
     }
 
-    await updateUser(body)
+    await updateUser(body);
 
     dataSave.value = true;
 
     setTimeout(() => {
         isLoading.value = false;
-    }, 2000)
+    }, 2000);
 
 }
 

@@ -16,7 +16,7 @@ const stoppedRoulette = useStoppedRoulette();
 const loadingStore = useLoadingStore();
 const noAvailableStore = useNoAvailableStore();
   
-const props = defineProps({ isDisabled: Boolean })
+const props = defineProps({ isDisabled: Boolean });
 
 const spinRoulette = async () => {
   stoppedRoulette.setStopped(false);
@@ -48,8 +48,8 @@ const spinRoulette = async () => {
   loadingStore.startLoading();
   setTimeout(() => {
     stoppedRoulette.setStopped(true);
-    loadingStore.stopLoading()
-  }, 3400)
+    loadingStore.stopLoading();
+  }, 3400);
 }
 
 </script>

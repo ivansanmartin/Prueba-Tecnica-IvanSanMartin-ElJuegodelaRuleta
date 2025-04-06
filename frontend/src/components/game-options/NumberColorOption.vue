@@ -55,7 +55,7 @@
         :loading="gameIsLaoding" />
 
     <SaveResult
-        v-if="shouldShowSaveResult">
+        v-if="shouldShowSaveResult && lastProfitStore.profit > 0"">
     </SaveResult>
 
     <SpinRouletteButton :is-disabled="isDisabledButton || balanceStore.balance < betStore.bet"></SpinRouletteButton>
@@ -138,7 +138,7 @@ const isDisabledButton = computed(() => {
 
 watch(number, (value) => {
     if (!number.value) {
-        number.value = 0
+        number.value = 0;
     }
     if (value < 0) {
         number.value = Math.abs(value);
@@ -152,8 +152,8 @@ watch(
         gameIsLaoding.value = true;
 
         if (stopped && !loading) {
-            finalColor.value = color.value
-            finalNumber.value = number.value
+            finalColor.value = color.value;
+            finalNumber.value = number.value;
             showResult.value = true;
 
             const body = {
@@ -166,10 +166,10 @@ watch(
             gameIsLaoding.value = false;
 
             if (gameResultStore.result.is_winner) {
-                balanceStore.setBalance(balanceStore.balance + gameResultStore.result.amount_won)
-                lastProfitStore.setProfit(gameResultStore.result.amount_won)
+                balanceStore.setBalance(balanceStore.balance + gameResultStore.result.amount_won);
+                lastProfitStore.setProfit(gameResultStore.result.amount_won);
             } else {
-                balanceStore.setBalance(balanceStore.balance - gameResultStore.result.amount_lost)
+                balanceStore.setBalance(balanceStore.balance - gameResultStore.result.amount_lost);
             }
         }
     }

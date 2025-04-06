@@ -8,7 +8,7 @@ export const getUserProfile = async (username) => {
 		return response.data;
 	} catch (error) {
 		if (error.response && error.response.status === 404) {
-			return error.response.data
+			return error.response.data;
 		} else {
 			return {
 				ok: false,

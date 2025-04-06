@@ -58,13 +58,13 @@
 
 <script setup>
 
-import ColorOption from "../game-options/ColorOption.vue"
-import NumberColor from "../game-options/NumberColorOption.vue"
-import ParityColorOption from "../game-options/ParityColorOption.vue"
-import { useBalanceStore } from "@/store/game/balanceStore"
-import { useBetStore } from "@/store/game/betStore"
-import { useLastProfitStore } from "@/store/game/lastProfitStore"
-import { useNoAvailableStore } from "@/store/game/noAvailableStore"
+import ColorOption from "../game-options/ColorOption.vue";
+import NumberColor from "../game-options/NumberColorOption.vue";
+import ParityColorOption from "../game-options/ParityColorOption.vue";
+import { useBalanceStore } from "@/store/game/balanceStore";
+import { useBetStore } from "@/store/game/betStore";
+import { useLastProfitStore } from "@/store/game/lastProfitStore";
+import { useNoAvailableStore } from "@/store/game/noAvailableStore";
 
 import { ref, watch } from "vue";
 import { storeToRefs } from "pinia";
@@ -78,13 +78,13 @@ const betStore = useBetStore();
 const lastProfitStore = useLastProfitStore();
 const noAvailableStore = useNoAvailableStore();
 
-const { balance } = storeToRefs(balanceStore)
-const { bet } = storeToRefs(betStore)
+const { balance } = storeToRefs(balanceStore);
+const { bet } = storeToRefs(betStore);
 
 
 watch(bet, (val) => {
   if (!bet.value) {
-    bet.value = 0
+    bet.value = 0;
   } 
 
   if (val < 0) {
@@ -96,26 +96,26 @@ watch(
   [() => balance.value, () => bet.value],
   ([newBalance, newBet]) => {
     if (!newBalance) {
-      balance.value = 0
+      balance.value = 0;
     }
     if (newBalance < 0) {
       balance.value = Math.abs(val);
     }
 
     if (!newBet) {
-      bet.value = 0
+      bet.value = 0;
     }
     if (newBet < 0) {
       bet.value = Math.abs(val);
     }
 
     if (newBalance < newBet) {
-      errorMessage.value = "No tiene fondos suficientes para apostar."
+      errorMessage.value = "No tiene fondos suficientes para apostar.";
       criterionNotMet.value = true;
-      noAvailableStore.setAvailable(false)
+      noAvailableStore.setAvailable(false);
     } else {
       criterionNotMet.value = false;
-      noAvailableStore.setAvailable(true)
+      noAvailableStore.setAvailable(true);
     }
   }
 )
