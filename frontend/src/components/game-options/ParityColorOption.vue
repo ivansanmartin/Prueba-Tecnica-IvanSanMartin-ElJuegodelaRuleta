@@ -61,9 +61,10 @@
 
         </div>
     </div>
-    <GameResult v-if="gameResultStore.result && lastProfitStore.profit != null" :result="gameResultStore.result"
-        :loading="gameIsLaoding" />
 
+    <GameResult v-if="gameResultStore.result || lastProfitStore.profit != null" :result="gameResultStore.result"
+        :loading="gameIsLaoding" />
+        
     <SaveResult v-if="shouldShowSaveResult && lastProfitStore.profit > 0"">
     </SaveResult>
 

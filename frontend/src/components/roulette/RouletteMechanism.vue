@@ -66,6 +66,7 @@ import { useBalanceStore } from "@/store/game/balanceStore";
 import { useBetStore } from "@/store/game/betStore";
 import { useLastProfitStore } from "@/store/game/lastProfitStore";
 import { useNoAvailableStore } from "@/store/game/noAvailableStore";
+import { useGameResultStore } from "@/store/user/gameResultStore";
 
 import { ref, watch } from "vue";
 import { storeToRefs } from "pinia";
@@ -78,6 +79,7 @@ const balanceStore = useBalanceStore();
 const betStore = useBetStore();
 const lastProfitStore = useLastProfitStore();
 const noAvailableStore = useNoAvailableStore();
+const gameResultStore = useGameResultStore();
 
 const { balance } = storeToRefs(balanceStore);
 const { bet } = storeToRefs(betStore);
@@ -124,6 +126,7 @@ watch(
 const getSelectedOption = (event) => {
   selectedBetType.value = event.target.value;
   lastProfitStore.setProfit(null);
+  gameResultStore.loadGameResult(null);
 };
 
 </script>
