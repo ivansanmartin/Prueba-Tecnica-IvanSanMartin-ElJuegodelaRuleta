@@ -2,6 +2,12 @@
 
 Prueba técnica que trata sobre el desarrollo de "El Juego de la Ruleta", frontend realizado utilizando Vue.js y JavaScript, backend construido con ASP.NET Core en .NET 8
 
+Probar en: https://roulette.ivansanmartin.dev/
+
+## Despliegue
+
+El despliegue se realizó en mi servidor local, que funciona como un clúster de Kubernetes. Además, implementé un proceso básico de CI/CD, el cual no era un requisito en la prueba técnica, pero decidí integrarlo para automatizar los despliegues a producción y facilitar la aplicación de cambios de forma rápida y sin intervención manual, para beneficio mío.
+
 ## 📋 Endpoints disponibles
 
 ### Roulette
