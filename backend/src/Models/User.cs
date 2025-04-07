@@ -9,7 +9,7 @@ namespace backend.Models
     public class User
     {
         public string Username { get; set; } = string.Empty;
-        public int Amount { get; set; }
+        public long Amount { get; set; }
 
         public static implicit operator User(UserDto v)
         {

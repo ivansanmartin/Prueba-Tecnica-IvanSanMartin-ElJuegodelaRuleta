@@ -12,6 +12,6 @@ namespace backend.Controllers.Dtos
         public string Username { get; set; } = string.Empty;
 
         [Required]
-        public int Amount { get; set; }       
+        public long Amount { get; set; }       
     }
 }
