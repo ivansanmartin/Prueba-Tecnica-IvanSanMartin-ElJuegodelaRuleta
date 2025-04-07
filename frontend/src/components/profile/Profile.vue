@@ -9,10 +9,10 @@
 					¡Bienvenido de vuelta!
 				</h6>
 
-				<div class="balance mt-4">
-					<h6 class="mb-2 text-primary">Balance:</h6>
-					<i class="text-success fa-solid fa-dollar-sign"></i
-					><span> {{ balanceStore.balance }}</span>
+				<div class="balance text-break d-flex gap-1 align-items-center">
+					<h6 class="text-primary m-0">Balance:</h6>
+                    <span><i class="text-success fa-solid fa-dollar-sign"></i
+                        >{{ balanceStore.balance }}</span>
 				</div>
 			</div>
 		</div>
