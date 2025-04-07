@@ -1,4 +1,4 @@
-replicaCount: 1
+replicaCount: 3
 
 image:
   repository: 192.168.1.200:30002/ivansanmartin/roulette-backend
@@ -12,11 +12,11 @@ namespace: ivansanmartin
 
 resources:
   limits:
-    cpu: 200m
-    memory: 64Mi
+    cpu: 500m
+    memory: 256Mi
   requests:
-    cpu: 100m
-    memory: 32Mi
+    cpu: 250m
+    memory: 128Mi
   
 service:
   type: ClusterIP
