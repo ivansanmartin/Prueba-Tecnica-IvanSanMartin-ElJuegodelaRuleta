@@ -19,85 +19,123 @@ namespace backend.Services
 
         public ApiResponse<UserDto> GetByUsername(string username)
         {
-            User? user = _context.User.FirstOrDefault(user => user.Username == username);
+            try
+            {
+                User? user = _context.User.FirstOrDefault(user => user.Username == username);
 
-            if (user != null) {
+                if (user != null) {
+                    return new ApiResponse<UserDto>
+                    {
+                        Ok = true,
+                        Message = "Usuario encontrado",
+                        Data = new UserDto
+                        {
+                            Username = user.Username,
+                            Amount = user.Amount
+                        }
+                    };
+
+                }
+
                 return new ApiResponse<UserDto>
                 {
-                    Ok = true,
-                    Message = "Usuario encontrado",
-                    Data = new UserDto
-                    {
-                        Username = user.Username,
-                        Amount = user.Amount
-                    }
+                    Ok = false,
+                    Message = "Usuario no encontrado",
                 };
-
+            }
+            catch (Exception ex)
+            {
+                
+                return new ApiResponse<UserDto>
+                {
+                    Ok = false,
+                    Message = $"Error al encontrar el usuario: {ex.Message}"
+                };
             }
 
-            return new ApiResponse<UserDto>
-            {
-                Ok = false,
-                Message = "Usuario no encontrado",
-            };
         }
 
         public async Task<ApiResponse<UserDto>> CreateUser(UserDto userDto)
         {
-            User? user = _context.User.FirstOrDefault(user => user.Username == userDto.Username);
+            try
+            {
+                User? user = _context.User.FirstOrDefault(user => user.Username == userDto.Username);
 
-            if (user != null) {
-                return new ApiResponse<UserDto>
+                if (user != null) {
+                    return new ApiResponse<UserDto>
+                    {
+                        Ok = false,
+                        Message = "El usuario ya existe",
+                    };
+                }
+
+                var newUser = new User 
                 {
-                    Ok = false,
-                    Message = "El usuario ya existe",
+                    Username = userDto.Username,
+                    Amount = userDto.Amount
                 };
-            }
 
-            var newUser = new User 
-            {
-                Username = userDto.Username,
-                Amount = userDto.Amount
-            };
-
-            _context.User.Add(newUser);
-            await _context.SaveChangesAsync();
-
-            return new ApiResponse<UserDto>
-            {
-                Ok = true,
-                Message = "Usuario creado correctamente",
-                Data = userDto
-            };
-        }
-        
-        public async Task<ApiResponse<UserDto>> UpdateUser(UserDto userDto)
-        {
-            var existngUser = _context.User.FirstOrDefault(user => user.Username == userDto.Username);
-
-            if (existngUser != null)
-            {
-                existngUser.Amount += userDto.Amount;
-
+                _context.User.Add(newUser);
                 await _context.SaveChangesAsync();
 
                 return new ApiResponse<UserDto>
                 {
                     Ok = true,
-                    Message = "Usuario actualizado correctamente",
-                    Data = new UserDto
-                    {
-                        Username = existngUser.Username,
-                        Amount = existngUser.Amount
-                    }
+                    Message = "Usuario creado correctamente",
+                    Data = userDto
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<UserDto>
+                {
+                    Ok = false,
+                    Message = $"Error al crear usuario: {ex.Message}"
                 };
             }
 
-            return new ApiResponse<UserDto>
+        }
+        
+        public async Task<ApiResponse<UserDto>> UpdateUser(UserDto userDto)
+        {
+            try
             {
-                Ok = false,
-                Message = "No se ha encontrado al usuario"
-            };
+                var existngUser = _context.User.FirstOrDefault(user => user.Username == userDto.Username);
+
+                if (existngUser != null)
+                {
+                    existngUser.Amount += userDto.Amount;
+
+                    await _context.SaveChangesAsync();
+
+                    return new ApiResponse<UserDto>
+                    {
+                        Ok = true,
+                        Message = "Usuario actualizado correctamente",
+                        Data = new UserDto
+                        {
+                            Username = existngUser.Username,
+                            Amount = existngUser.Amount
+                        }
+                    };
+                }
+
+                return new ApiResponse<UserDto>
+                {
+                    Ok = false,
+                    Message = "No se ha encontrado al usuario"
+                };
+            }
+            catch (Exception ex)
+            {
+                
+                return new ApiResponse<UserDto>
+                {
+                    Ok = false,
+                    Message = $"Error al actualizar el usuario: {ex.Message}"
+                };
+            }
+
         }
 
     }
